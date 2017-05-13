@@ -1,3 +1,7 @@
-# First Chapter
+# Bootstrapping
 
-GitBook allows you to organize your book into chapters, each chapter is stored in a separate file like this one.
+* Getting started with the template in either Ellie or using create-elm-app
+* Introducing and reading over the API documentation at https://hipstore.now.sh
+
+
+

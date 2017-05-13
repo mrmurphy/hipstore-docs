@@ -1,3 +1,6 @@
 # Summary
 
-* [First Chapter](chapter1.md)
+* [Introduction](README.md)
+* [Bootstrapping](chapter1.md)
+* Making HTTP Requests
+
