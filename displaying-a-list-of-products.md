@@ -10,15 +10,15 @@
 
 ### Sending the HTTP Request
 
----
+* Cmds
+* Msgs
+* Update function
 
-## Fetching the Cart Items
+### Rendering the Page
 
-* Can you do it on your own?
+## Bonus Points
 
----
-
-## Rendering the Products Page
+**TODO: **There's already a loading indicator provided by HipstoreUI that animates a loading bar whenever an XHR is in progress. This can be disabled by setting `loadingIndicator` to false on the config record you're passing to the HipstoreUI function. Can you implement your own loading indicator that displays when the request is fired off, and hides when the request returns?
 
 
 
