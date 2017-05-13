@@ -6,5 +6,6 @@
 * [Getting the Cart Contents](getting-the-cart-contents.md)
 * [Adding a Product to the Cart](adding-a-product-to-the-cart.md)
 * [Adding the Cart Page](making-http-requests.md)
-* Removing a Product From the Cart
+* [Removing a Product From the Cart](removing-a-product-from-the-cart.md)
+* [Patting Yourself on the Back](patting-yourself-on-the-back.md)
 
