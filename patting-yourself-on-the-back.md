@@ -1,4 +1,4 @@
 # Patting Yourself on the Back
 
-{% youtube src="https://www.youtube.com/watch?v=9bZkp7q19f0" %}{% endyoutube %}
+https://www.youtube.com/watch?v=BpnhL89l5W0
 
