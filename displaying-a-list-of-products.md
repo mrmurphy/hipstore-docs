@@ -44,10 +44,11 @@ getProducts =
 This is a good start, but you'll get some compiler errors. Here's a quick list of ways to get through them:
 
 * Import `Json.Decode`
-* define `decodeProduct` somewhere in the file like this: 
+* define `decodeProduct` somewhere in the file like this:
+
   ```
   decodeProduct: Json.Decode.Decoder Product
-  decodeProduct = Debug.crash "TODO". 
+  decodeProduct = Debug.crash "TODO".
   ```
 
   Don't worry, we'll come back to that in a later section.
@@ -86,7 +87,6 @@ type Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 ...
-
 ```
 
 and now we can add another pipe that'll map that command, wrapping its data up in our new message:
@@ -106,9 +106,70 @@ getProducts =
 
 We save the file with high hopes, only to find out that the compiler has something else to do. Now we've got to fix the `update` function.
 
-### Making a place on the model for the data that we're expecting the request to return
+### The Model & Update
 
-### Hand the command off to the runtime
+So we're intending to fetch a list of products from the server, and then give them to `hipstore-ui` for rendering. But if we look at the type of the message we just made, we notice that it's not just a list of products, it's a `WebData (List Product)`. Well, luckily if we [take a look at the type of the Config](http://package.elm-lang.org/packages/splodingsocks/hipstore-ui/latest/HipstoreUI#Config) that we need to pass into HUI, we see that it's expecting what we already have, a `WebData (List Journal)`. So all we have to do is stick the content of the message directly on the model.
+
+Here's the model, and the updated init function with the new field:
+
+```elm
+---- MODEL ----
+
+
+type alias Model =
+    { products : WebData (List Product)
+    }
+
+
+init : ( Model, Cmd Msg )
+init =
+    ( { products = RemoteData.NotAsked
+      }
+    , Cmd.batch []
+    )
+
+...
+```
+
+Notice how the initial value of the products field isn't an empty list, but rather `RemoteData.NotAsked`. This just communicates to whomever is reading the data that we haven't sent the request yet.
+
+Now that we've got the field on the model, go ahead and change the update function to handle the new message, and update the model accordingly:
+
+```elm
+...
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        NoOp ->
+            model ! []
+
+        ProductsChanged products ->
+            { model | products = products } ! []
+
+```
+
+### Actually Sending the Request
+
+So, once we have a command, how do we actually send it to the runtime? 
+
+![](https://cdn.meme.am/cache/instances/folder571/250x250/34189571/picard-point-make-it-so-number-one.jpg)
+
+_not quite._
+
+There are two places we can do this. The first is in the init, which is a tuple of model, and a command \(`(Model, Cmd Msg)`\):
+
+![](/assets/import.png)
+
+And the second is quite similar; the update function, which has the same return type. You might notice the fancy `!` in there after `model`:
+
+![](/assets/import2.png)
+
+The `!` is just a function that takes a model on the left, and a list of commands on the right, and bundles them up into the tuple we need. The important thing is that we can use that list to send off commands.
+
+In this case, we'll stick it in the `init` since we want the products to be fetched right away on page load:
+
+
 
 ## JSON Decoding
 
