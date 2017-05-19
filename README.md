@@ -12,3 +12,5 @@ I wanted to teach these skills with a watered-down and silly version of what mig
 
 And also, the currency is entirely taco-based 🌮.
 
+A live example of the finished project can be seen here: [http://app.hipstore.sploding.rocks/](http://app.hipstore.sploding.rocks/)
+

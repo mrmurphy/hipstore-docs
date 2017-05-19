@@ -6,11 +6,11 @@
 
 * Explain that the view has already been done
 
-* Link to the docs
+* Link to the docs: [http://package.elm-lang.org/packages/splodingsocks/hipstore-ui/3.0.0/HipstoreUI](http://package.elm-lang.org/packages/splodingsocks/hipstore-ui/3.0.0/HipstoreUI)
 
 ## The Template
 
-* Paste a link to the template here \(a gist?\)
+* Paste a link [https://github.com/splodingsocks/hipstore-starter](https://github.com/splodingsocks/hipstore-starter)
 * Give a general tour
 * Explain why it's all in one file
 * Explain the existing actions
@@ -23,8 +23,7 @@
 
 ## The Environment
 
-* [https://ellie-app.com](https://ellie-app.com)
-* Or, if you like your own editor and your own computer, [https://www.npmjs.com/package/create-elm-app](https://www.npmjs.com/package/create-elm-app)
+* Just Node.js and the starter kit. Follow the directions in the ReadMe
 
 
 
