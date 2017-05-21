@@ -146,12 +146,11 @@ update msg model =
 
         ProductsChanged products ->
             { model | products = products } ! []
-
 ```
 
 ### Actually Sending the Request
 
-So, once we have a command, how do we actually send it to the runtime? 
+So, once we have a command, how do we actually send it to the runtime?
 
 ![](https://cdn.meme.am/cache/instances/folder571/250x250/34189571/picard-point-make-it-so-number-one.jpg)
 
@@ -169,7 +168,24 @@ The `!` is just a function that takes a model on the left, and a list of command
 
 In this case, we'll stick it in the `init` since we want the products to be fetched right away on page load:
 
+```
+...
 
+init : ( Model, Cmd Msg )
+init =
+    ( { products = RemoteData.NotAsked
+      }
+    , Cmd.batch [ getProducts ] -- <-- This Cmd will get run on app start!
+    )
+
+...
+```
+
+If you have the development server running and you try to load up the page right now you'll encounter a nice error in the console.
+
+![](/assets/import5.png)
+
+Remember when we defined the body of `decodeProduct` as `Debug.crash "TODO"`? Well the app is doing just that, crashing. Let's learn some JSON decoding and get rid of that crash!
 
 ## JSON Decoding
 
