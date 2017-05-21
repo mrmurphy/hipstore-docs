@@ -88,5 +88,5 @@ I've prepared a simple API to code against. It might be a bit slow in response b
 
 ## The Environment
 
-The starter kit has detailed instructions about what you need to get going, but it's really just three things: `Node.js`, `elm`, and `create-elm-app`. See more in the readme.
+The starter kit has detailed instructions about what you need to get going, but it's really just three things: `Node.js`, `elm`, and `create-elm-app`. See more in the [readme](https://github.com/splodingsocks/hipstore-starter/blob/master/README.md).
 
