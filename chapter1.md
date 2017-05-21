@@ -88,7 +88,5 @@ I've prepared a simple API to code against. It might be a bit slow in response b
 
 ## The Environment
 
-* Just Node.js and the starter kit. Follow the directions in the ReadMe
-
-
+The starter kit has detailed instructions about what you need to get going, but it's really just three things: `Node.js`, `elm`, and `create-elm-app`. See more in the readme.
 
