@@ -189,6 +189,14 @@ Remember when we defined the body of `decodeProduct` as `Debug.crash "TODO"`? We
 
 ## JSON Decoding
 
+![](http://18404-presscdn-0-57.pagely.netdna-cdn.com/wp-content/uploads/2011/02/hole-in-the-wall-Tom-Riles-Audience-Warm-up-Guy.jpg)
+
+When I first started using Elm I thought JSON decoding was a big pain. I didn't realize that it's Elm's way of keeping the compiler honest, and making sure that the types that come into the app are what they claim to be.
+
+Similar to the way in which commands are just data that represent some future action, decoders are data that represent our expectations about the shape of incoming data.
+
+Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game show ["Hole in the Wall"](https://en.wikipedia.org/wiki/Hole_in_the_Wall_%28U.S._game_show%29) in which participants 7-9o
+
 ## Sending the HTTP Request
 
 * Cmds
