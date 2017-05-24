@@ -191,11 +191,90 @@ Remember when we defined the body of `decodeProduct` as `Debug.crash "TODO"`? We
 
 ![](http://18404-presscdn-0-57.pagely.netdna-cdn.com/wp-content/uploads/2011/02/hole-in-the-wall-Tom-Riles-Audience-Warm-up-Guy.jpg)
 
-When I first started using Elm I thought JSON decoding was a big pain. I didn't realize that it's Elm's way of keeping the compiler honest, and making sure that the types that come into the app are what they claim to be.
+When I first started using Elm I thought JSON decoding was a big pain. I didn't realize that it's Elm's way of keeping the compiler honest, and making sure that the types that come into the app actually are what they claim to be.
 
 Similar to the way in which commands are just data that represent some future action, decoders are data that represent our expectations about the shape of incoming data.
 
-Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game show ["Hole in the Wall"](https://en.wikipedia.org/wiki/Hole_in_the_Wall_%28U.S._game_show%29) in which participants 7-9o
+Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game show ["Hole in the Wall"](https://en.wikipedia.org/wiki/Hole_in_the_Wall_%28U.S._game_show%29) in which contestants attempt to fit themselves through hole cut into a wall moves quickly toward them. If they fit through the hole, they win. If they don't manage to fit themselves through the hole, the wall breaks, and the contestant loses, falling into a poll of water.
+
+Similarly, the incoming JSON is like the participant. If it doesn't fit into the shape we've described with the decoder, the process aborts and we're informed of the error. If the data does fit, we get the data we expected out the other side.
+
+So let's get rid of the Debug.crash from the `decodeProduct` definition and replace it with a decoder. We'll build the decoder using a third-party library, `NoRedInk/elm-decode-pipeline`. 
+
+> ~ Aside ~
+>
+> In Elm, record type aliases are also type constructors, or functions. The type constructor takes as many parameters as it has fields, and in the same order, so:
+>
+> ```elm
+> type alias ABC =
+>     {a : String, b: String, c: String}
+>
+> -- ABC has the type: String -> String -> String -> ABC
+> ```
+
+Here's what we'll do:
+
+* Call `decode` with the type constructor \(`Product`\) to wrap up the constructor function in the `Decoder` type.
+* One by one, use pipes to apply decoders to that wrapped up constructor function. These other decoders should match up with the types that the constructor takes as parameters.
+* Once we've passed in a decoder for each argument in the constructor function, we end up with a `Decoder Product` 
+
+Here we wrap up the constructor function:
+
+```elm
+decodeProduct : Json.Decode.Decoder Product
+decodeProduct =
+    Json.Decode.Pipeline.decode Product
+```
+
+And we apply the first decoder, which is a `String`, and will fill the `id` field on the product:
+
+```elm
+decodeProduct : Json.Decode.Decoder Product
+decodeProduct =
+    Json.Decode.Pipeline.decode Product
+        |> Json.Decode.Pipeline.required "id" Json.Decode.string
+```
+
+Let's take a quick break to explain what's going on here. `Json.Decode.Pipeline.required` is designed to find a named field on a JSON object, and extract the value. It takes a string as the first argument, which is the name of the field on the JSON object, and a decoder as the second argument, which is the type we expect to find there. In this case we're telling it to look for an "id" field on the JSON object, and pull out the string that it finds there. If that field isn't there, or if it isn't a string, the decoding fails, and we know that our expectations about the shape of the data were incorrect.
+
+Now let's do the rest of the fields. We've got to be careful, though. I deliberately designed the API so that the JSON fields don't all match up with the fields we have on the Elm type. **Remember: **when we're decoding, we're not just trying to represent the JSON as-is in Elm, but trying to coerce the JSON into the data types that we've already established in Elm.
+
+Here's the shape of the data that the API returns compared with the fields that HipstoreUI expects:
+
+```
+--- API (Typescript)
+
+class Product {
+  name: string
+  price: number
+  image: string
+  id: string
+}
+
+--- HipstoreUI (Elm)
+
+type alias Product = 
+    { id : String!    , displayName : String
+    , tacos : Float
+    , image : String
+    }
+```
+
+Looks like the JSON has all of the information we need. But the `displayName` field is called `name` on the JSON, and the `tacos` field is called `price` on the JSON. That's simple enough to handle. All we need to do is use the same `required` function we used above, but make sure we use the right name for the JSON field:
+
+```
+decodeProduct : Json.Decode.Decoder Product
+decodeProduct =
+    Json.Decode.Pipeline.decode Product
+        |> Json.Decode.Pipeline.required "id" Json.Decode.string
+        |> Json.Decode.Pipeline.required "name" Json.Decode.string
+         -- 👆 This is the second application, so it corresponds with
+         -- the displayName field on the Product record.
+```
+
+You've got it! You're doing very well. I'll leave you to use what you learned above to apply decoders to the last two fields, `tacos` and `image`. Good luck
+
+## 
 
 ## Sending the HTTP Request
 
