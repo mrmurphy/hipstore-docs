@@ -4,7 +4,7 @@
 
 ![](https://thumbs.gfycat.com/SlushyMixedArizonaalligatorlizard-size_restricted.gif)
 
-Even though this is just a workshop, I didn't want the example project to look like the spread of a 1997 personal homepage on the information superhighway, so I pre-baked the user interface and published as an Elm package that exposes a type and two functions–one that renders each page of the app when given the right info. Through the rest of this documentation, that package will be referred to as Hipstore-UI, or HUI. The template comes with it pre-installed, so you shouldn't have to worry about anything there. But it'd be very good to take a look at the documentation so you know what kinds of data and messages we need:
+Even though this is just a workshop, I didn't want the example project to look like the spread of a 1997 personal homepage on the information superhighway, so I pre-baked the user interface and published it as an Elm package that exposes a type and two functions–one that renders each page of the app when given the right info. Through the rest of this documentation, that package will be referred to as Hipstore-UI, or HUI. The template comes with HUI pre-installed, so you shouldn't have to worry about anything there. But it'd be very good to take a look at the documentation so you know what kinds of data and messages we need.
 
 Why don't you take a moment to do that right now?
 
