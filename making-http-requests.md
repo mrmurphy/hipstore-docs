@@ -242,8 +242,9 @@ uiConfig model =
     , onClickViewProducts = ChangePage Home
       ...
     }
-
 ```
 
+And you should now be able to click between pages. Congratulations!!!
 
+🎉
 
