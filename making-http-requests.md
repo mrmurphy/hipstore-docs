@@ -5,7 +5,7 @@ Stuff's about to get real. Almost any real-world single-page app will \(ironical
 Here's what our routes will look like:
 
 ```
-/#/ (or /)   <- The products page
+/# (or /)   <- The products page
 /#cart       <- The cart page
 ```
 
@@ -51,6 +51,8 @@ Simple enough!
 
 Next, we'll build a parser for each route, and for the sake of organization, we'll stick them into a record together:
 
+\(You'll need to add `import Route exposing ((:=))` in order for this to work\)
+
 ```
 -- I've left off the type signature on purpose because it's ugly and big 💄
 routeParsers =
@@ -74,7 +76,7 @@ Cart := Route.static "#cart"
 * \(C\) `Route.static` is a function from `Route` that tells us that we're about to pass in a part of the path that's a fixed string, it's not parameterized.
 * \(D\) is the very string that we referenced in C. It's the hash path that we want to represent our route.
 
-These parsers will be used below to turn a string into a Page, and vice-versa. 
+These parsers will be used below to turn a string into a Page, and vice-versa.
 
 #### Location to Page function
 
@@ -120,7 +122,94 @@ navigateTo page =
 
 #### Navigation.program
 
+Now that we've got all the parts, let's put it together.
+
+First stop is the `main` function. Let's change `Html.program` to `Navigation.program` \(we'll have to import `Navigation`, as well\).
+
+```elm
+main : Program Never Model Msg
+main =
+    Navigation.program
+        { view = view
+        ...
+```
+
+But wait! This will give us some compiler errors because `Navigation.program` takes an extra parameter, a function that takes a `Location` and turns it into a message. This message will be given to the update function whenever the location changes, so let's go add that message now:
+
+```elm
+...
+ 
+type Msg
+    = NoOp
+    ...
+    | LocationChanged Location
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        NoOp ->
+            model ! []
+
+        ...
+
+        LocationChanged location ->
+            { model | page = pageFromLocation location } ! []
+            
+...
+
+main =
+    Navigation.program LocationChanged
+        { view = view
+        ...
+```
+
+You'll notice that we used `pageFromLocation` to turn the location into a page. Yay! But now we're trying to store the page on the model, and there's no field for that yet, so let's add that to the model type:
+
+```
+type alias Model =
+    { products : WebData (List Product)
+    ...
+    , page : Page
+    }
+```
+
+And we'll need to fix the init function, too. But what should the initial value of `page` be?
+
+Well, it turns out that `Navigation.program` actually passes a `Location` to the init function as well, so we can just use that to get our first page:
+
+```
+init : Location -> ( Model, Cmd Msg )
+init location =
+    ( { products = RemoteData.NotAsked
+        ...
+      , page = pageFromLocation location
+      }
+...
+```
+
+Great job! Now if you compile, you shouldn't get any errors. But nothing has changed in the UI yet. We're still just showing the product list no matter what the path is.
+
 #### Displaying the right page
+
+Let's update the view function to render the correct page based on the model:
+
+```
+view : Model -> Html Msg
+view model =
+    div []
+        [ case model.page of
+            Home ->
+                HipstoreUI.products <| uiConfig model
+
+            Cart ->
+                HipstoreUI.cart <| uiConfig model
+        ]
+```
+
+We've added a case statement inside the wrapper div that renders the cart if that's the active page, or the product list if the home page is active. Let's test it by changing the URL by hand to `/#cart`:
+
+
 
 #### Changing pages
 
