@@ -1,6 +1,6 @@
 # Adding the Cart Page
 
-Stuff's about to get real. Almost any real-world single-page app will \(ironically\) have more than one page. Which page is showing at any given moment is determined by the path in the location bar. In our case we'll actually be abusing the hash portion of the path, which is normally used to tell the browser where to scroll to, and instead determine which page to show. We're only using the hash right now out of a lazy desire not to modify the server at all. In a real production app we'd most likely use the whole path for routing instead of just the hash, and we'd modify the server so that the paths for each of our pages all direct to the same html and javascript files that run our app.
+Stuff's about to get real. Almost any real-world single-page app will \(contradictorally\) have more than one page. Which page is showing at any given moment is determined by the path in the location bar. In our case we'll be abusing the hash portion of the path, which is normally used to tell the browser where to scroll to, by instead using it to determine which page to show. We're only using the hash right now out of a lazy desire not to modify the server routing at all. In a real production app we'd most likely use the whole path for routing instead of just the hash, and we'd modify the server so that the paths for each of our pages all direct to the same html and javascript files that run our app.
 
 Here's what our routes will look like:
 
@@ -73,7 +73,7 @@ Cart := Route.static "#cart"
 
 * \(A\) Is the type constructor for the route page. We're just defining that when this parser succeeds, we want to get the Cart page out of it.
 * \(B\) `:=` is an infix function from `Route` that takes a type constructor on one side, and parsing rules on the right side.
-* \(C\) `Route.static` is a function from `Route` that tells us that we're about to pass in a part of the path that's a fixed string, it's not parameterized.
+* \(C\) `Route.static` is a function from `Route` that tells us that we're about to pass in a part of the path that's a fixed string, it's not a dynamic parameter.
 * \(D\) is the very string that we referenced in C. It's the hash path that we want to represent our route.
 
 These parsers will be used below to turn a string into a Page, and vice-versa.
