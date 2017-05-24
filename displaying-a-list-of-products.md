@@ -296,7 +296,7 @@ uiConfig model =
 ...
 ```
 
-## 
+Now if you reload the page, you should get a beautiful list of products. Congratulations!
 
 ## Bonus Points
 
