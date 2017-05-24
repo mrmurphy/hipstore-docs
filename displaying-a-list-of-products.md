@@ -272,15 +272,7 @@ decodeProduct =
          -- the displayName field on the Product record.
 ```
 
-You've got it! You're doing very well. I'll leave you to use what you learned above to apply decoders to the last two fields, tacos and image. Good luck
-
-## 
-
-## Sending the HTTP Request
-
-* Cmds
-* Msgs
-* Update function
+You've got it! You're doing very well. I'll leave you to use what you learned above to apply decoders to the last two fields, tacos and image. Good luck!
 
 ## Rendering the Page
 
