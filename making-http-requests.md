@@ -138,7 +138,7 @@ But wait! This will give us some compiler errors because `Navigation.program` ta
 
 ```elm
 ...
- 
+
 type Msg
     = NoOp
     ...
@@ -155,7 +155,7 @@ update msg model =
 
         LocationChanged location ->
             { model | page = pageFromLocation location } ! []
-            
+
 ...
 
 main =
@@ -209,9 +209,41 @@ view model =
 
 We've added a case statement inside the wrapper div that renders the cart if that's the active page, or the product list if the home page is active. Let's test it by changing the URL by hand to `/#cart`:
 
-
+![](/assets/import8.png)
 
 #### Changing pages
+
+Last thing we need is to make those navigation buttons work. Let's add a new message:
+
+```
+type Msg
+    = NoOp
+      ...
+    | ChangePage Page
+
+...
+
+update msg model =
+        ...
+        ChangePage page ->
+            model ! [ navigateTo page ]
+```
+
+Now we've got a message that we can use to change to a new page. Note that we didn't update the `page` field on the model. We want the change to go all the way out to the location bar, not just to the in-memory model, so we'll use the `navigateTo` function that we set up earlier.
+
+Now we can just hook it up in the HUI config:
+
+```
+uiConfig : Model -> HipstoreUI.Config Msg
+uiConfig model =
+    { onAddToCart = AddToCart
+      ...
+    , onClickViewCart = ChangePage Cart
+    , onClickViewProducts = ChangePage Home
+      ...
+    }
+
+```
 
 
 
