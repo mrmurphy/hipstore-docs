@@ -276,6 +276,28 @@ You've got it! You're doing very well. I'll leave you to use what you learned ab
 
 ## Rendering the Page
 
+Once you've finished up the decoder, and you reload the page, you should see that the products have been loaded onto the model:![](/assets/Google Chrome_2017-05-24 11-51-04.png)But the UI still says that it's waiting to be told to load. This is because we haven't yet updated the config value that we're passing into the view. Let's do that now:
+
+```
+---- VIEW ----
+
+
+uiConfig : Model -> HipstoreUI.Config Msg
+uiConfig model =
+    { onAddToCart = \_ -> NoOp
+    , onRemoveFromCart = \_ -> NoOp
+    , onClickViewCart = NoOp
+    , onClickViewProducts = NoOp
+    , products = model.products <-- This is what we changed!
+    , cart = RemoteData.NotAsked
+    , loadingIndicator = True
+    }
+
+...
+```
+
+## 
+
 ## Bonus Points
 
 **TODO: **There's already a loading indicator provided by HipstoreUI that animates a loading bar whenever an XHR is in progress. This can be disabled by setting `loadingIndicator` to false on the config record you're passing to the HipstoreUI function. Can you implement your own loading indicator that displays when the request is fired off, and hides when the request returns?
