@@ -10,7 +10,7 @@ There's a function in the `Http` module called `post` that makes building simple
 addItemToCart : String -> Cmd Msg
 addItemToCart id =
     Http.request
-        { method = "GET"
+        { method = "POST"
         , headers = []
         , url = "https://hipstore.now.sh/api/cart/" ++ id
         , body = Http.emptyBody
