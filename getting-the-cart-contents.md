@@ -1,6 +1,6 @@
 # Getting the Cart Contents
 
-Getting the cart contents will work just like the last HTTP request except because of Web security we're going to have to construct the request a bit differently. We're using a session cookie on the server to keep track of what each user has in their cart, and since the server is running on a different domain from the client, we'll need to use the `withCredentials` option on the browser's XMLHttpRequest API to expose that cookie to the server. The built-in `get` function doesn't allow us to do this, but luckily, there's a lower-level function that does.
+Getting the cart contents will work just like the last HTTP request with an exception. Because of Web security we're going to have to construct the request a bit differently. We're using a session cookie on the server to keep track of what each user has in their cart, and since the server is running on a different domain from the client, we'll need to use the `withCredentials` option on the browser's XMLHttpRequest API to expose that cookie to the server. The built-in `get` function doesn't allow us to do this, but luckily, there's a lower-level function that does.
 
 ```elm
 getCart : Cmd Msg
