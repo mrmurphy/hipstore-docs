@@ -26,3 +26,7 @@ Here we've called `Http.request` and we've passed in a record with all of the fi
 
 Now, on your own, go ahead and add a new Msg that will trigger this request, and add that message to the `onAddToCart` field in the config we're passing to HUI.
 
+![](/assets/import7.png)
+
+Party! Items in the cart.
+
