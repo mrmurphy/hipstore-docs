@@ -199,7 +199,7 @@ Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game sho
 
 Similarly, the incoming JSON is like the participant. If it doesn't fit into the shape we've described with the decoder, the process aborts and we're informed of the error. If the data does fit, we get the data we expected out the other side.
 
-So let's get rid of the Debug.crash from the `decodeProduct` definition and replace it with a decoder. We'll build the decoder using a third-party library, `NoRedInk/elm-decode-pipeline`. 
+So let's get rid of the Debug.crash from the `decodeProduct` definition and replace it with a decoder. We'll build the decoder using a third-party library, `NoRedInk/elm-decode-pipeline`.
 
 > ~ Aside ~
 >
@@ -272,7 +272,7 @@ decodeProduct =
          -- the displayName field on the Product record.
 ```
 
-You've got it! You're doing very well. I'll leave you to use what you learned above to apply decoders to the last two fields, `tacos` and `image`. Good luck
+You've got it! You're doing very well. I'll leave you to use what you learned above to apply decoders to the last two fields, tacos and image. Good luck
 
 ## 
 
