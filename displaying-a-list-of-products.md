@@ -57,9 +57,9 @@ This is a good start, but you'll get some compiler errors. Here's a quick list o
 
 ### Turning the request into a command
 
-Because we've specified that the type of `getProducts` is a `Cmd Msg`, which is what we want it to be in order to send it to the runtime \(side effects, remember?\) but the current type of the value is an \`Http.Request ...\`, we're getting a compiler error.
+Because we've specified that the type of `getProducts` is a `Cmd Msg`, which is what we want it to be in order to send it to the runtime \(side effects, remember?\) but the current type of the value is an `Http.Request ...`, we're getting a compiler error.
 
-Conveniently, RemoteData comes with a function to do just that. Let's add it on with a pipe:
+Conveniently, RemoteData comes with a function to do the conversion that we need. Let's add it on with a pipe:
 
 ```elm
 ---- REQUESTS ----
@@ -84,8 +84,6 @@ type Msg
     = NoOp
     | ProductsChanged (WebData (List Product)) -- <-- added this!
 
-
-update : Msg -> Model -> ( Model, Cmd Msg )
 ...
 ```
 
@@ -104,7 +102,7 @@ getProducts =
 ...
 ```
 
-We save the file with high hopes, only to find out that the compiler has something else to do. Now we've got to fix the `update` function.
+We save the file with high hopes, only to find out that the compiler has something else for us to do. Now we've got to fix the `update` function.
 
 ### The Model & Update
 
@@ -193,9 +191,9 @@ Remember when we defined the body of `decodeProduct` as `Debug.crash "TODO"`? We
 
 When I first started using Elm I thought JSON decoding was a big pain. I didn't realize that it's Elm's way of keeping the compiler honest, and making sure that the types that come into the app actually are what they claim to be.
 
-Similar to the way in which commands are just data that represent some future action, decoders are data that represent our expectations about the shape of incoming data.
+Similar to the way in which commands are just data that represent some future action, decoders are data that represent our expectations about the shape of incoming JSON.
 
-Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game show ["Hole in the Wall"](https://en.wikipedia.org/wiki/Hole_in_the_Wall_%28U.S._game_show%29) in which contestants attempt to fit themselves through hole cut into a wall moves quickly toward them. If they fit through the hole, they win. If they don't manage to fit themselves through the hole, the wall breaks, and the contestant loses, falling into a poll of water.
+Though the analogy isn't perfect, I'll relate JSON decoding to the U.S. game show ["Hole in the Wall"](https://en.wikipedia.org/wiki/Hole_in_the_Wall_%28U.S._game_show%29) in which contestants attempt to fit themselves through hole cut into a wall moves quickly toward them. If they fit through the hole, they win. If they don't manage to fit themselves through the hole, the wall breaks, and the contestant loses by falling into a pool of water.
 
 Similarly, the incoming JSON is like the participant. If it doesn't fit into the shape we've described with the decoder, the process aborts and we're informed of the error. If the data does fit, we get the data we expected out the other side.
 
@@ -207,9 +205,9 @@ So let's get rid of the Debug.crash from the `decodeProduct` definition and repl
 >
 > ```elm
 > type alias ABC =
->     {a : String, b: String, c: String}
+>     {a : String, b: Int, c: Float}
 >
-> -- ABC has the type: String -> String -> String -> ABC
+> -- ABC has the type: String -> Int -> Float -> ABC
 > ```
 
 Here's what we'll do:
