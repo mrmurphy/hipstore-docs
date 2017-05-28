@@ -252,7 +252,8 @@ class Product {
 --- HipstoreUI (Elm)
 
 type alias Product = 
-    { id : String!    , displayName : String
+    { id : String
+    , displayName : String
     , tacos : Float
     , image : String
     }
